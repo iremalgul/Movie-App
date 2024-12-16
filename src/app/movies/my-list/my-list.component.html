@@ -1,0 +1,56 @@
+<app-loading *ngIf="loading"></app-loading>
+
+<div class="alert alert-danger" *ngIf="error">
+  {{ error }}
+</div>
+
+<div *ngIf="!loading">
+  <div *ngIf="movies.length > 0; else no_movies">
+    <h1>{{ title }}</h1>
+
+    <div class="alert alert-warning" *ngIf="movies.length > 0">
+      {{ movies.length }} film bulundu.
+    </div>
+
+    <div class="mb-3">
+      <input type="text"
+        class="form-control"
+        [(ngModel)]="filterText"
+        (ngModelChange)="onInputChange()"
+        placeholder="Arama yap...">
+    </div>
+
+    <ng-template [ngTemplateOutlet]="movieListTemplate"></ng-template>
+
+  </div>
+</div>
+
+<ng-template #no_movies>
+  <div *ngIf="!loading && movies.length === 0" class="alert alert-warning">
+    Film bulunamadı.
+  </div>
+</ng-template>
+
+<ng-template #movieListTemplate>
+  <div class="card mb-3" *ngFor="let movie of FilteredMovies">
+    <div class="row">
+      <div class="col-md-3">
+        <img src="/assets/img/{{ movie.imageUrl }}" class="img-fluid rounded-start" alt="">
+      </div>
+      <div class="col-md-9">
+        <div class="card-body">
+          <h2 class="card-title">{{ movie.title | titlecase }}</h2>
+          <p class="card-text">{{ movie.description | summary: 30 }}</p>
+
+          <div>
+            <a routerLink="/movies/{{ movie.id }}" class="btn btn-sm btn-outline-primary">Detaylar</a>
+
+            <button *ngIf="getButtonState(movie)" 
+              (click)="removeFromList(movie)" 
+              class="btn btn-sm btn-danger ms-1">Listeden Çıkar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

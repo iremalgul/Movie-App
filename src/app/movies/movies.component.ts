@@ -63,9 +63,13 @@ export class MoviesComponent implements OnInit {
   }
 
   onInputChange() {
-    this.FilteredMovies = this.filterText?
-      this.movies.filter(m=> m.title.indexOf(this.filterText) !== -1 ||
-                         m.description.indexOf(this.filterText) !== -1): this.movies
+    const filter = this.filterText.toLowerCase();
+    this.FilteredMovies = this.filterText
+      ? this.movies.filter(m =>
+          m.title.toLowerCase().includes(filter) ||
+          m.description.toLowerCase().includes(filter)
+        )
+      : this.movies;
   }
 
   addToList($event: any, movie: Movie) {

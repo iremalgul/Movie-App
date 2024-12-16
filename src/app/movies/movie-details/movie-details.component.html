@@ -10,6 +10,15 @@
           <div class="card-body">
             <h1 class="card-title">{{ movie.title }}</h1>
             <p class="card-text">{{ movie.description }}</p>
+            <div>
+              <button *ngIf="!getButtonState(movie)" 
+              (click)="addToList($event,movie)" 
+              class="btn btn-sm btn-primary ms-1">Listeye Ekle</button>
+
+            <button *ngIf="getButtonState(movie)" 
+              (click)="addToList($event,movie)" 
+              class="btn btn-sm btn-danger ms-1">Listeden Çıkar</button>
+            </div>
           </div>
         </div>
       </div>

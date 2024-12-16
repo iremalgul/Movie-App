@@ -5,6 +5,8 @@ import { AuthGuard } from "../auth/auth.guard";
 import { MovieCreateComponent } from "./movie-create/movie-create.component";
 import { MovieDetailsComponent } from "./movie-details/movie-details.component";
 import { MoviesComponent } from "./movies.component";
+import { MyListComponent } from "./my-list/my-list.component";
+
 
 
 const routes : Routes =[
@@ -13,10 +15,12 @@ const routes : Routes =[
         component : MoviesHomeComponent,
         canActivate: [AuthGuard] ,
         children : [
+          { path: 'myList', component: MyListComponent },
           { path: '', component: MoviesComponent },
           { path: 'category/:categoryId', component: MoviesComponent},
           { path: 'create', component: MovieCreateComponent},
-          { path: ':movieId', component: MovieDetailsComponent }
+          { path: ':movieId', component: MovieDetailsComponent },
+          
         ]
       }
 ]
@@ -26,6 +30,6 @@ const routes : Routes =[
     imports :[RouterModule.forChild(routes)],
     exports : [RouterModule]
 })
-export class MoviesRoutingMdoule{
+export class MoviesRoutingModule{
 
 }
